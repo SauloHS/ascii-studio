@@ -1,0 +1,9 @@
+[ ] [PRIORITY] Create src/core/text.ts - manages cursor, styling, and general text for the canvas
+
+[ ] Allow the user to change text color and canvas size
+
+[ ] Create a initial tab before the editor
+
+[ ] Plugin support
+
+[ ] Mouse interactiveness
