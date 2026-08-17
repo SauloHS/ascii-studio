@@ -1,26 +1,32 @@
 import { useState } from "react";
 import { useInput } from "ink";
-import { createCanvas } from "../core/canvas";
+import { createCanvas, setCell } from "../core/canvas";
 import { CanvasView } from "./canvas-view";
 import { clamp } from "../core/math";
 
 export function App() {
-  const [canvas] = useState(() => createCanvas(10, 5));
+  const [canvas, setCanvas] = useState(() => createCanvas(10, 5));
   const [cursorX, setCursorX] = useState(0);
   const [cursorY, setCursorY] = useState(0);
 
   useInput((input, key) => {
     if (key.leftArrow) {
-      setCursorX(clamp(cursorX - 1, 0, canvas.width - 1));
+      setCursorX((prev) => clamp(prev - 1, 0, canvas.width - 1));
     }
     if (key.rightArrow) {
-      setCursorX(clamp(cursorX + 1, 0, canvas.width - 1));
+      setCursorX((prev) => clamp(prev + 1, 0, canvas.width - 1));
     }
     if (key.upArrow) {
-      setCursorY(clamp(cursorY - 1, 0, canvas.height - 1));
+      setCursorY((prev) => clamp(prev - 1, 0, canvas.height - 1));
     }
     if (key.downArrow) {
-      setCursorY(clamp(cursorY + 1, 0, canvas.height - 1));
+      setCursorY((prev) => clamp(prev + 1, 0, canvas.height - 1));
+    }
+    if (input) {
+      setCanvas((prev) => {
+        setCell(prev, cursorX, cursorY, { char: input, fg: 0xffffff });
+        return { ...prev };
+      });
     }
   });
 
